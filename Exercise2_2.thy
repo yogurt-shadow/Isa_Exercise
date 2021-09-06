@@ -84,7 +84,7 @@ theorem "nodes (explode n t) = 2^n * (nodes t) + (2^n - 1)"
   apply(simp add: algebra_simps)
   done
 
-(* Exer 2.10 *)
+(* Exer 2.11 *)
 datatype exp = Var | Const int | Add exp exp | Mult exp exp
 
 fun eval :: "exp \<Rightarrow> int \<Rightarrow> int" where
@@ -121,5 +121,21 @@ fun coeffs :: "exp \<Rightarrow> int list" where
 "coeffs (Const n) = [n]" |
 "coeffs (Add ex1 ex2) = sum (coeffs ex1) (coeffs ex2)" |
 "coeffs (Mult ex1 ex2) = mul (coeffs ex1) (coeffs ex2)"
+
+(* prove correctness for add and mul respectively *)
+lemma evalp_add[simp]: "evalp (sum xs ys) a = evalp xs a + evalp ys a"
+  apply (induction rule: sum.induct)
+  apply (auto simp add:Int.int_distrib)
+  done
+
+lemma evalp_mul[simp]: "evalp (mul xs ys) a = evalp xs a * evalp ys a"
+  apply (induction rule: mul.induct)
+  apply (auto simp add:Int.int_distrib)
+  done
+
+theorem "evalp (coeffs e) x = eval e x"
+  apply(induction e)
+     apply(auto)
+  done
 
 end
