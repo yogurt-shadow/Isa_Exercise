@@ -61,18 +61,22 @@ apply(induction xs)
 (* Exer 2.4 *)
 fun snoc2 :: "'a list \<Rightarrow> 'a \<Rightarrow> 'a list" where
 "snoc2 [] x = [x]" |
-"snoc2 xs x = xs @ [x]"
+"snoc2 (x # xs) ys = (x # (snoc2 xs ys))"
 
 
 fun reverse2 :: "'a list \<Rightarrow> 'a list" where
 "reverse2 [] = []" |
 "reverse2 (x#xs) = snoc2 (reverse2(xs)) x"
 
-lemma snoc_app0 [simp]: "xs @ [x] = snoc2 xs x"
+lemma [simp]: "reverse2 (snoc2 xs y) = y # (reverse2 xs)"
+  apply(induction xs)
+   apply(auto)
+  done
+
+theorem [simp]: "reverse2 (reverse2 xs) = xs"
   apply(induction xs)
   apply(auto)
   done
-
 
 
 (* Exer 2.5 *)
