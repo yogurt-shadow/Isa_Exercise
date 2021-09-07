@@ -371,6 +371,7 @@ lemma [simp]: "exec (a@b) s1 s2 = exec b s1 (exec a s1 s2)"
 (* Meaning: compiler a q only affects those larger or equal to q, because in compiler we only mention q and q+1.
    Thus, we do not change the key_value pair for those less than q in rs.
  *)
+
 lemma [simp]: "q > r \<Longrightarrow> exec (compiler a q) s rs r = rs r"
   apply(induction a arbitrary: r rs q)
     apply(auto)
