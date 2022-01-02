@@ -1,4 +1,4 @@
-# Isa_Exercise
+# Isar_Exercise
 
 Exercise for Isabelle 2021.
 
